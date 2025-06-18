@@ -13,6 +13,26 @@ function App() {
 
   const [guessedLetters, setGuessedLetters] = useState<string[]>([])
 
+  // Calculate incorrect letters (letters that are guessed but not in the word)
+  const incorrectLetters = guessedLetters.filter(
+    letter => !wordToGuess.toLowerCase().includes(letter.toLowerCase())
+  )
+
+  // Check if player has won
+  const isWinner = wordToGuess
+    .toLowerCase()
+    .split("")
+    .every(letter => guessedLetters.map(l => l.toLowerCase()).includes(letter))
+
+  // Check if player has lost
+  const isLoser = incorrectLetters.length >= 6
+
+  const addGuessedLetter = (letter: string) => {
+    if (guessedLetters.includes(letter)) return
+
+    setGuessedLetters(currentLetters => [...currentLetters, letter])
+  }
+
   
   console.log(wordToGuess)
   return (
@@ -26,11 +46,25 @@ function App() {
         alignItems: 'center'
       }}>
 
-      <div style={{ fontSize: '2rem', textAlign: 'center'}}>Lose Win</div>
+      <div style={{ fontSize: '2rem', textAlign: 'center'}}>
+        {isWinner && "Winner! - Refresh to try again"}
+        {isLoser && "Nice Try - Refresh to try again"}
+      </div>
       <HangManDrawing numberOfGuesses={incorrectLetters.length} />
-      <HangManWord />
+      <HangManWord 
+        reveal={isLoser}
+        guessedLetters={guessedLetters}
+        wordToGuess={wordToGuess}
+      />
       <div style={{ alignSelf: 'stretch'}}>
-        <Keyboard />
+        <Keyboard
+          disabled={isWinner || isLoser}
+          activeLetters={guessedLetters.filter(letter =>
+            wordToGuess.toLowerCase().includes(letter.toLowerCase())
+          )}
+          inactiveLetters={incorrectLetters}
+          addGuessedLetter={addGuessedLetter}
+        />
       </div>
       
     </div>

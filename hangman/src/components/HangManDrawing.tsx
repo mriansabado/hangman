@@ -1,4 +1,3 @@
-
 // the body will be stored in a separate div
 const HEAD = (
     <div
@@ -93,16 +92,11 @@ type HangManDrawingProps = {
     numberOfGuesses: number
 }
 
-export function HangManDrawing({ numberOfGuesses }) {
+export function HangManDrawing({ numberOfGuesses }: HangManDrawingProps) {
   return (
     <div style={{ position: 'relative' }}>
-        {/* drawing the hangman divs */}
-        {HEAD}
-        {BODY}
-        {RIGHT_ARM}
-        {LEFT_ARM}
-        {RIGHT_LEG}
-        {LEFT_LEG}
+        {/* drawing the hangman divs progressively */}
+        {bodyParts.slice(0, numberOfGuesses)}
         <div
             style={{
                 height: '50px',
