@@ -1,5 +1,8 @@
 import { useState } from "react"
 import words from './wordList.json'
+import { HangManDrawing } from "./components/HangManDrawing"
+import { HangManWord } from "./components/HangManWord"
+import { Keyboard } from "./components/Keyboard"
 
 
 function App() {
@@ -23,10 +26,10 @@ function App() {
         alignItems: 'center'
       }}>
 
-      <div style={{ fontSize: '2rem', textAlign: 'center'}}>
-        Lose
-        Win
-      </div>
+      <div style={{ fontSize: '2rem', textAlign: 'center'}}>Lose Win</div>
+      <HangManDrawing />
+      <HangManWord />
+      <Keyboard />
       
     </div>
   )
