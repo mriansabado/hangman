@@ -3,6 +3,8 @@ import words from './wordList.json'
 import { HangManDrawing } from "./components/HangManDrawing"
 import { HangManWord } from "./components/HangManWord"
 import { Keyboard } from "./components/Keyboard"
+import { Hint } from "./components/Hint"
+import { Confetti } from "./components/Confetti"
 
 
 function App() {
@@ -33,8 +35,6 @@ function App() {
     setGuessedLetters(currentLetters => [...currentLetters, letter])
   }
 
-  
-  console.log(wordToGuess)
   return (
     <div
       style={{
@@ -46,6 +46,8 @@ function App() {
         alignItems: 'center'
       }}>
 
+      <Confetti isActive={isWinner} />
+      
       <div style={{ fontSize: '2rem', textAlign: 'center'}}>
         {isWinner && "Winner! - Refresh to try again"}
         {isLoser && "Nice Try - Refresh to try again"}
@@ -56,6 +58,7 @@ function App() {
         guessedLetters={guessedLetters}
         wordToGuess={wordToGuess}
       />
+      <Hint wordToGuess={wordToGuess} />
       <div style={{ alignSelf: 'stretch'}}>
         <Keyboard
           disabled={isWinner || isLoser}
